@@ -1,0 +1,110 @@
+body{
+	font-family: roboto;
+	background: linear-gradient(#991a27, #171616);
+	background-size: 400% 400%;
+	margin: 0;
+	padding: 0;
+}
+h1{
+	text-align: center;
+}
+#movieBox{
+	display: flex;
+	flex-direction: column;
+	margin: 10px auto;
+	width: 60%;
+	/*
+	background-color: black;*/
+	flex: 5 auto;
+	color: white;
+}
+
+#sortBox{
+	display: flex;
+	flex: 1;
+	flex-direction: row;
+}
+
+#sortBox > button{
+	flex: 1;
+	border-radius: 5px;
+	margin-right: 2px;
+}
+
+#filterInput{
+	flex: 2 auto;
+	min-width: 65px;
+	
+	height: 25px;
+}
+
+p{
+	flex: 1 auto;
+	display: block;
+	
+}
+input{
+	color: white;
+	background-color: transparent;
+}
+
+.movieDiv{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end
+}
+
+#movieList{
+	flex: 5;
+	min-height: 400px;
+}
+
+.movieDiv a{
+	color: black;
+	margin: 10px auto;
+	margin-right: 10px;
+	align-items: right;
+	flex: 0 0 auto;
+	text-decoration: none;
+}
+
+#pagination{
+	margin: 10px;
+	text-align: center;
+	color: white;
+}
+
+#pagination a{
+	text-decoration: none;
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#pagination input{
+	width: 20px;
+	text-align: center;
+}
+
+#right{
+	display: none;
+}
+
+#addMovie button{
+	border-radius: 2px;
+	margin-top: 2px;
+	margin-right: 3px;
+}
+
+.hidden{
+	display: none;
+}
+
+#idKey{
+	display: none;
+}
+
+#info{
+	margin-top: 4px;
+	font-weight: bold;
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Lab 3 Movie List</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="script.js" type="text/javascript"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyDf-Oz5vdsoTYht0EryCiR-lBZ7MR32PPk",
+	    authDomain: "lab-3-movie-list.firebaseapp.com",
+	    databaseURL: "https://lab-3-movie-list.firebaseio.com",
+	    projectId: "lab-3-movie-list",
+	    storageBucket: "",
+	    messagingSenderId: "888615144747"
+	  };
+	  firebase.initializeApp(config);
+	</script>
+</head>
+<body>
+	<div id="movieBox">
+		<h1>Movie list</h1>
+			<div id="sortBox">
+				<button id="sortTitle">Sort By Title<br/><span id="titleSortDirection">Ascending</span></button>
+				<button id="sortDir">Sort By Director<br/><span id="dirSortDirection">Ascending</span></button>
+				<button id="sortYear">Sort By Year<br/><span id="yearSortDirection">Ascending</span></button>
+				<input type="text" id="filterInput" placeholder="&#x1F50E Search">
+			</div>
+			
+		<div id="movieList"></div>
+		<div id="pagination">
+			<label>Results per page:</label><br/>
+			<input type="text" id="resultsPerPage" title="Type in to show how many results per page"><br/>
+			<label>Page number:</label><br/>
+			<a id="left" href="#" title="Previous page"><</a>
+			<input type="text" id="pageNr" value="1">
+			<a id="right" href="#" title="Next page">></a>
+		</div>
+
+		<div id="addMovie">
+			<input type="text" id="idKey">
+			<input type="text" id="inputTitle" placeholder="Title"><br/>
+			<input type="text" id="inputDirector" placeholder="Director"><br/>
+			<input type="text" id="inputYear" placeholder="Year"><br/>
+			<button id="addBtn">Add to database</button><button id="editConfirm" class="hidden">Confirm changes</button><button id="editCancel" class="hidden">Cancel</button>
+			<div id="info"></div>
+		</div>
+	</div>
+</body>
+</html>
