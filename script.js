@@ -19,6 +19,7 @@ window.addEventListener("load", function (){
 	let pagination = document.getElementById("pagination");
 	let pageNr = document.getElementById("pageNr");
 	let resultsPerPage = document.getElementById("resultsPerPage");
+	let totalPagesInfo = document.getElementById("totalPagesInfo");
 	let info = document.getElementById("info");
 	let titleCount = 0;
 	let dirCount = 0;
@@ -96,18 +97,28 @@ window.addEventListener("load", function (){
 
 	resultsPerPage.addEventListener("keyup", function(event){
 		if(resultsPerPage.value > movieList.childNodes.length)event.preventDefault();
-		else if(resultsPerPage.value.length === 0){
+		else if(resultsPerPage.value.length === 0  || resultsPerPage.value == 0){
 			pageNr.value = 1;
 			right.style.display = "none";
 			left.style.display = "none";
-			for(let i = 0; i < movieList.childNodes.length; i++){
-				movieList.childNodes[i].classList.remove("hidden");
+			totalPagesInfo.innerText = "";
+			if (resultsPerPage.value.length === 0) {
+				for(let i = 0; i < movieList.childNodes.length; i++){
+					movieList.childNodes[i].classList.remove("hidden");
+					
+				}
+			}
+			else{
+				for(let i = 0; i < movieList.childNodes.length; i++){
+					movieList.childNodes[i].classList.add("hidden");
+					
+				}
 			}
 		}
 		else{
 			right.style.display = "inline";
 			pageNr.value = 1;
-
+			totalPagesInfo.innerText = `of ${Math.ceil(movieList.childNodes.length / resultsPerPage.value)}`
 			getItemsPerPage(1);
 		}	
 	})
@@ -116,9 +127,6 @@ window.addEventListener("load", function (){
 		if (pageNr.value.length === 0 || pageNr.value <= 0) {
 			right.style.display = "none";
 			left.style.display = "none";
-			for(let i = 0; i < movieList.childNodes.length; i++){
-				movieList.childNodes[i].classList.remove("hidden");
-			}
 			event.preventDefault();
 		}
 		else if(pageNr.value > Math.ceil(movieList.childNodes.length / resultsPerPage.value)){
@@ -144,7 +152,6 @@ window.addEventListener("load", function (){
 	})
 
 	right.addEventListener("click", function(event){
-		console.log(movieList.lastChild.classList[1])
 		if (movieList.lastChild.classList[1] === undefined) event.preventDefault();
 		else{
 			left.style.display = "inline";
@@ -237,18 +244,15 @@ window.addEventListener("load", function (){
 		movieList.innerText = "";
 		db.ref("/").orderByChild(value).once("value", function(snapshot){
 			snapshot.forEach(child => {
-				let sortObj = child.val()
-				console.log(sortObj);
+				let sortObj = child.val();
 				createMovieList(sortObj.movie, sortObj.director, sortObj.year, child.key, count)
 			})
 		})
 	}
 
-	function getItemsPerPage(currentPage, /*direction*/){
+	function getItemsPerPage(currentPage){
 		info.innerText = "";
 		let totalPages = Math.ceil(movieList.childNodes.length / resultsPerPage.value);
-		let start = resultsPerPage.value * currentPage - Number(resultsPerPage.value);
-		//console.log(start);
 		if(currentPage == 1){
 			left.style.display = "none";
 			right.style.display = "inline";
@@ -257,17 +261,14 @@ window.addEventListener("load", function (){
 			left.style.display = "inline";
 			right.style.display = "inline";
 		}
-		console.log(resultsPerPage.value * currentPage - Number(resultsPerPage.value));
+
 		for(let i = 0; i < movieList.childNodes.length; i++){
 			movieList.childNodes[i].classList.add("hidden");
-			console.log(movieList.childNodes.length - Number(resultsPerPage.value) + 1);
 			for (let y = (currentPage - 1) * resultsPerPage.value; y < (currentPage * resultsPerPage.value); y++){
-				/*if(y > resultsPerPage.value * currentPage - Number(resultsPerPage.value)){*/
 				if(currentPage == totalPages ){
 					right.style.display = "none";
 					for(let x = y; x < movieList.childNodes.length; x++){
 						movieList.childNodes[x].classList.remove("hidden");
-						console.log("Kolla: " + currentPage, i)
 					}
 				}
 				else{	
@@ -281,6 +282,7 @@ window.addEventListener("load", function (){
 		let movieParagraph;
 		pageNr.value = 1;
 		resultsPerPage.value = "";
+		totalPagesInfo.innerText = "";
 		for(let i = 0; i < movieList.childNodes.length; i++){
 			movieParagraph = movieList.childNodes[i].getElementsByTagName("p")[0];
 			if(movieParagraph.innerHTML.toUpperCase().indexOf(filterInput.value.toUpperCase()) > -1){
